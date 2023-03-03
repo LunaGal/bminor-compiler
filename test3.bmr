@@ -1,0 +1,6 @@
+//This file has comments alternating with valid lines, as well as a few invalid tokens
+hi hello howdy
+//This next line has an invalid token in between some valid tokens
+my_var1 1_my_var _my_var1 23m 23 /m23
+//This next line is valid
+grapes

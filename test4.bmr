@@ -1,0 +1,4 @@
+//This file has some valid lines followed by comments containing invalid characters
+hello //1hello
+hi //%hi
+howdy //&howdy
