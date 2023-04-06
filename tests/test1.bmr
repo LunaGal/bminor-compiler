@@ -1,0 +1,7 @@
+//This test contains several legal idenitifiers, but is not syntactically valid
+//Ideally, the scanner should throw no errors, but the parser should recognize that it is not a valid token
+dog cat ocelot cat
+ocelot creature shark _shark _shark_2
+_Shark12345_shark
+//Here are some keywords and identifiers masquerading as keywords
+array boolean boolean1 array2

@@ -1,11 +1,11 @@
-#include "token.h"
+#include "parser.tab.h"
 #include <stdio.h>
 
 extern FILE *yyin;
 extern int yylex();
 extern int line;
 extern char *yytext;
-const char* str_token_type(token_t);
+const char* str_token_type(enum yytokentype);
 
 int main(int argc, char const *argv[])
 {
@@ -20,8 +20,8 @@ int main(int argc, char const *argv[])
 	}
 	
 	while (1) {
-		token_t t = yylex();
-		if (t==TOKEN_EOF) {
+		enum yytokentype t = yylex();
+		if (t==0) {
 			break;
 		}
 		const char* token_type = str_token_type(t);
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-const char* str_token_type(token_t t) {
+const char* str_token_type(enum yytokentype t) {
 	switch (t) {
 		case TOKEN_EOF: return "EOF";
 		case TOKEN_ARRAY: return "keyword array";
@@ -51,6 +51,14 @@ const char* str_token_type(token_t t) {
 		case TOKEN_ID: return "id";
 		case TOKEN_INT_LTRL: return "int literal";
 		case TOKEN_STR_LTRL: return "str literal";
+		case TOKEN_COLON: return "colon";
+		case TOKEN_SEMI: return "semicolon";
+		case TOKEN_L_PAREN: return "L paren";
+		case TOKEN_R_PAREN: return "R paren";
+		case TOKEN_L_BRACE: return "L brace";
+		case TOKEN_R_BRACE: return "R brace";
+		case TOKEN_ASSIGN: return "assign";
+		case TOKEN_EQUIV: return "equiv";
 	}
 	return "";
 }

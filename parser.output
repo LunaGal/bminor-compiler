@@ -1,0 +1,484 @@
+Terminals which are not used
+
+   TOKEN_EOF
+   TOKEN_ARRAY
+   TOKEN_ELSE
+   TOKEN_FALSE
+   TOKEN_FOR
+   TOKEN_IF
+   TOKEN_PRINT
+   TOKEN_TRUE
+   TOKEN_VOID
+   TOKEN_WHILE
+   TOKEN_EQUIV
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: declaration
+    2        | program declaration
+
+    3 declaration: var_declaration
+    4            | func_declaration
+
+    5 func_declaration: func_header TOKEN_SEMI
+    6                 | func_header func_assignment
+
+    7 func_header: declarator TOKEN_FUNCTION type TOKEN_L_PAREN TOKEN_R_PAREN
+
+    8 var_declaration: declarator type TOKEN_SEMI
+    9                | declarator type var_assignment TOKEN_SEMI
+
+   10 declarator: TOKEN_ID TOKEN_COLON
+
+   11 var_assignment: TOKEN_ASSIGN expression
+
+   12 func_assignment: TOKEN_ASSIGN TOKEN_L_BRACE compound_statement TOKEN_R_BRACE
+
+   13 type: TOKEN_BOOLEAN
+   14     | TOKEN_CHAR
+   15     | TOKEN_INTEGER
+   16     | TOKEN_STRING
+
+   17 expression: constant
+   18           | TOKEN_L_PAREN expression TOKEN_R_PAREN
+
+   19 constant: TOKEN_INT_LTRL
+   20         | TOKEN_STR_LTRL
+
+   21 statement: declaration
+   22          | TOKEN_RETURN expression
+
+   23 compound_statement: statement
+   24                   | compound_statement statement
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+TOKEN_EOF (258)
+TOKEN_ARRAY (259)
+TOKEN_BOOLEAN (260) 13
+TOKEN_CHAR (261) 14
+TOKEN_ELSE (262)
+TOKEN_FALSE (263)
+TOKEN_FOR (264)
+TOKEN_FUNCTION (265) 7
+TOKEN_IF (266)
+TOKEN_INTEGER (267) 15
+TOKEN_PRINT (268)
+TOKEN_RETURN (269) 22
+TOKEN_STRING (270) 16
+TOKEN_TRUE (271)
+TOKEN_VOID (272)
+TOKEN_WHILE (273)
+TOKEN_ID (274) 10
+TOKEN_INT_LTRL (275) 19
+TOKEN_STR_LTRL (276) 20
+TOKEN_COLON (277) 10
+TOKEN_SEMI (278) 5 8 9
+TOKEN_L_PAREN (279) 7 18
+TOKEN_R_PAREN (280) 7 18
+TOKEN_L_BRACE (281) 12
+TOKEN_R_BRACE (282) 12
+TOKEN_ASSIGN (283) 11 12
+TOKEN_EQUIV (284)
+
+
+Nonterminals, with rules where they appear
+
+$accept (30)
+    on left: 0
+program (31)
+    on left: 1 2, on right: 0 2
+declaration (32)
+    on left: 3 4, on right: 1 2 21
+func_declaration (33)
+    on left: 5 6, on right: 4
+func_header (34)
+    on left: 7, on right: 5 6
+var_declaration (35)
+    on left: 8 9, on right: 3
+declarator (36)
+    on left: 10, on right: 7 8 9
+var_assignment (37)
+    on left: 11, on right: 9
+func_assignment (38)
+    on left: 12, on right: 6
+type (39)
+    on left: 13 14 15 16, on right: 7 8 9
+expression (40)
+    on left: 17 18, on right: 11 18 22
+constant (41)
+    on left: 19 20, on right: 17
+statement (42)
+    on left: 21 22, on right: 23 24
+compound_statement (43)
+    on left: 23 24, on right: 12 24
+
+
+state 0
+
+    0 $accept: . program $end
+
+    TOKEN_ID  shift, and go to state 1
+
+    program           go to state 2
+    declaration       go to state 3
+    func_declaration  go to state 4
+    func_header       go to state 5
+    var_declaration   go to state 6
+    declarator        go to state 7
+
+
+state 1
+
+   10 declarator: TOKEN_ID . TOKEN_COLON
+
+    TOKEN_COLON  shift, and go to state 8
+
+
+state 2
+
+    0 $accept: program . $end
+    2 program: program . declaration
+
+    $end      shift, and go to state 9
+    TOKEN_ID  shift, and go to state 1
+
+    declaration       go to state 10
+    func_declaration  go to state 4
+    func_header       go to state 5
+    var_declaration   go to state 6
+    declarator        go to state 7
+
+
+state 3
+
+    1 program: declaration .
+
+    $default  reduce using rule 1 (program)
+
+
+state 4
+
+    4 declaration: func_declaration .
+
+    $default  reduce using rule 4 (declaration)
+
+
+state 5
+
+    5 func_declaration: func_header . TOKEN_SEMI
+    6                 | func_header . func_assignment
+
+    TOKEN_SEMI    shift, and go to state 11
+    TOKEN_ASSIGN  shift, and go to state 12
+
+    func_assignment  go to state 13
+
+
+state 6
+
+    3 declaration: var_declaration .
+
+    $default  reduce using rule 3 (declaration)
+
+
+state 7
+
+    7 func_header: declarator . TOKEN_FUNCTION type TOKEN_L_PAREN TOKEN_R_PAREN
+    8 var_declaration: declarator . type TOKEN_SEMI
+    9                | declarator . type var_assignment TOKEN_SEMI
+
+    TOKEN_BOOLEAN   shift, and go to state 14
+    TOKEN_CHAR      shift, and go to state 15
+    TOKEN_FUNCTION  shift, and go to state 16
+    TOKEN_INTEGER   shift, and go to state 17
+    TOKEN_STRING    shift, and go to state 18
+
+    type  go to state 19
+
+
+state 8
+
+   10 declarator: TOKEN_ID TOKEN_COLON .
+
+    $default  reduce using rule 10 (declarator)
+
+
+state 9
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 10
+
+    2 program: program declaration .
+
+    $default  reduce using rule 2 (program)
+
+
+state 11
+
+    5 func_declaration: func_header TOKEN_SEMI .
+
+    $default  reduce using rule 5 (func_declaration)
+
+
+state 12
+
+   12 func_assignment: TOKEN_ASSIGN . TOKEN_L_BRACE compound_statement TOKEN_R_BRACE
+
+    TOKEN_L_BRACE  shift, and go to state 20
+
+
+state 13
+
+    6 func_declaration: func_header func_assignment .
+
+    $default  reduce using rule 6 (func_declaration)
+
+
+state 14
+
+   13 type: TOKEN_BOOLEAN .
+
+    $default  reduce using rule 13 (type)
+
+
+state 15
+
+   14 type: TOKEN_CHAR .
+
+    $default  reduce using rule 14 (type)
+
+
+state 16
+
+    7 func_header: declarator TOKEN_FUNCTION . type TOKEN_L_PAREN TOKEN_R_PAREN
+
+    TOKEN_BOOLEAN  shift, and go to state 14
+    TOKEN_CHAR     shift, and go to state 15
+    TOKEN_INTEGER  shift, and go to state 17
+    TOKEN_STRING   shift, and go to state 18
+
+    type  go to state 21
+
+
+state 17
+
+   15 type: TOKEN_INTEGER .
+
+    $default  reduce using rule 15 (type)
+
+
+state 18
+
+   16 type: TOKEN_STRING .
+
+    $default  reduce using rule 16 (type)
+
+
+state 19
+
+    8 var_declaration: declarator type . TOKEN_SEMI
+    9                | declarator type . var_assignment TOKEN_SEMI
+
+    TOKEN_SEMI    shift, and go to state 22
+    TOKEN_ASSIGN  shift, and go to state 23
+
+    var_assignment  go to state 24
+
+
+state 20
+
+   12 func_assignment: TOKEN_ASSIGN TOKEN_L_BRACE . compound_statement TOKEN_R_BRACE
+
+    TOKEN_RETURN  shift, and go to state 25
+    TOKEN_ID      shift, and go to state 1
+
+    declaration         go to state 26
+    func_declaration    go to state 4
+    func_header         go to state 5
+    var_declaration     go to state 6
+    declarator          go to state 7
+    statement           go to state 27
+    compound_statement  go to state 28
+
+
+state 21
+
+    7 func_header: declarator TOKEN_FUNCTION type . TOKEN_L_PAREN TOKEN_R_PAREN
+
+    TOKEN_L_PAREN  shift, and go to state 29
+
+
+state 22
+
+    8 var_declaration: declarator type TOKEN_SEMI .
+
+    $default  reduce using rule 8 (var_declaration)
+
+
+state 23
+
+   11 var_assignment: TOKEN_ASSIGN . expression
+
+    TOKEN_INT_LTRL  shift, and go to state 30
+    TOKEN_STR_LTRL  shift, and go to state 31
+    TOKEN_L_PAREN   shift, and go to state 32
+
+    expression  go to state 33
+    constant    go to state 34
+
+
+state 24
+
+    9 var_declaration: declarator type var_assignment . TOKEN_SEMI
+
+    TOKEN_SEMI  shift, and go to state 35
+
+
+state 25
+
+   22 statement: TOKEN_RETURN . expression
+
+    TOKEN_INT_LTRL  shift, and go to state 30
+    TOKEN_STR_LTRL  shift, and go to state 31
+    TOKEN_L_PAREN   shift, and go to state 32
+
+    expression  go to state 36
+    constant    go to state 34
+
+
+state 26
+
+   21 statement: declaration .
+
+    $default  reduce using rule 21 (statement)
+
+
+state 27
+
+   23 compound_statement: statement .
+
+    $default  reduce using rule 23 (compound_statement)
+
+
+state 28
+
+   12 func_assignment: TOKEN_ASSIGN TOKEN_L_BRACE compound_statement . TOKEN_R_BRACE
+   24 compound_statement: compound_statement . statement
+
+    TOKEN_RETURN   shift, and go to state 25
+    TOKEN_ID       shift, and go to state 1
+    TOKEN_R_BRACE  shift, and go to state 37
+
+    declaration       go to state 26
+    func_declaration  go to state 4
+    func_header       go to state 5
+    var_declaration   go to state 6
+    declarator        go to state 7
+    statement         go to state 38
+
+
+state 29
+
+    7 func_header: declarator TOKEN_FUNCTION type TOKEN_L_PAREN . TOKEN_R_PAREN
+
+    TOKEN_R_PAREN  shift, and go to state 39
+
+
+state 30
+
+   19 constant: TOKEN_INT_LTRL .
+
+    $default  reduce using rule 19 (constant)
+
+
+state 31
+
+   20 constant: TOKEN_STR_LTRL .
+
+    $default  reduce using rule 20 (constant)
+
+
+state 32
+
+   18 expression: TOKEN_L_PAREN . expression TOKEN_R_PAREN
+
+    TOKEN_INT_LTRL  shift, and go to state 30
+    TOKEN_STR_LTRL  shift, and go to state 31
+    TOKEN_L_PAREN   shift, and go to state 32
+
+    expression  go to state 40
+    constant    go to state 34
+
+
+state 33
+
+   11 var_assignment: TOKEN_ASSIGN expression .
+
+    $default  reduce using rule 11 (var_assignment)
+
+
+state 34
+
+   17 expression: constant .
+
+    $default  reduce using rule 17 (expression)
+
+
+state 35
+
+    9 var_declaration: declarator type var_assignment TOKEN_SEMI .
+
+    $default  reduce using rule 9 (var_declaration)
+
+
+state 36
+
+   22 statement: TOKEN_RETURN expression .
+
+    $default  reduce using rule 22 (statement)
+
+
+state 37
+
+   12 func_assignment: TOKEN_ASSIGN TOKEN_L_BRACE compound_statement TOKEN_R_BRACE .
+
+    $default  reduce using rule 12 (func_assignment)
+
+
+state 38
+
+   24 compound_statement: compound_statement statement .
+
+    $default  reduce using rule 24 (compound_statement)
+
+
+state 39
+
+    7 func_header: declarator TOKEN_FUNCTION type TOKEN_L_PAREN TOKEN_R_PAREN .
+
+    $default  reduce using rule 7 (func_header)
+
+
+state 40
+
+   18 expression: TOKEN_L_PAREN expression . TOKEN_R_PAREN
+
+    TOKEN_R_PAREN  shift, and go to state 41
+
+
+state 41
+
+   18 expression: TOKEN_L_PAREN expression TOKEN_R_PAREN .
+
+    $default  reduce using rule 18 (expression)
