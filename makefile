@@ -8,8 +8,11 @@ LFLAGS =
 RM = rm -f
 LDFLAGS = -ll
 
-parser_driver: parser.o parser_driver.o scanner.o
+parser_driver: parser.o parser_driver.o scanner.o ast_helpers.o
 	$(CC) $(LDFLAGS) -o $@ $^
+
+ast_helpers.o: ast_helpers.c
+	$(CC) $(CFLAGS) -o $@ -c $^
 
 parser_driver.o: parser_driver.c
 	$(CC) $(CFLAGS) -o $@ -c $^
@@ -26,16 +29,16 @@ scanner_driver.o: scanner_driver.c parser.tab.h
 scanner.o: scanner.c
 	$(CC) $(CFLAGS) -o $@ -c $^
 
-scanner.c: scanner.l
-	$(LEX) $(LFLAGS) -o $@ $^
+scanner.c: scanner.l parser.tab.h
+	$(LEX) $(LFLAGS) -o $@ scanner.l
 
-parser.o: parser.tab.c
+parser.o: parser.tab.c 
 	$(CC) $(CFLAGS) -o $@ -c $^
 
 parser.tab.c: parser.y
 	$(BSN) -d parser.y
 
-parser.h: parser.tab.c
+parser.tab.h: parser.tab.c
 	@test -f $@ || rm -f parser.tab.c
 	@test -f $@ || $(MAKE) $(AM_MAKEFLAGS) data.c
 

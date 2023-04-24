@@ -1,0 +1,93 @@
+// defining global functions
+square: function integer () {
+	return 2;
+}
+
+root: function integer (x: integer, s: string) {
+	return 1;
+}
+
+// declaring global variables of each type
+x: integer;
+y: integer = 123;
+b: boolean = false;
+c: char = 'q';
+s: string = "hello world\n";
+
+//including complex types
+a: array [5] integer;
+b: array [5] integer = {1,2,3,4,5};
+
+// must include a main function
+
+main: function integer () {
+	//statements including each operator
+	x = 0;
+	//x++;
+	//x = -x;
+	//b = !b;
+	//x = x^3;
+	//x = x*x;
+	//x = x/x;
+	//x = x%x;
+	//x = x+3;
+	//x = x-3;
+	//b = (x < x);
+	//b = (x <= x);
+	//b = (x > x);
+	//b = (x >= x);
+	//b = (x == x);
+	//b = (x != x);
+	//b = b&&b;
+	//b = b||b;
+//
+	////one long statement that uses an operator from every level
+	////to test the ability to detect precedence
+	//b = (-x++^3 * 4 + 5 > 6 && true);
+//
+	////An expression followed by a semicolon is a statement
+	//x+1;
+//
+	////A declaration is a statement
+	//z: integer;
+//
+	////Code can be separated into blocks
+	//{b = false;}
+//
+	////Print is a statement
+	//print 1, "hi", b, x, s, 4-3;
+//
+	////if statements
+//
+	//if (b) print x;
+//
+	//if (5 < 4) {
+	//	print "meow";
+	//	print x;
+	//}
+//
+	//else if (4 == 5) {
+	//	print "cats";
+	//}
+//
+	//else {
+	//	print "meow!!!";
+	//}
+//
+	////for loop
+	////can have any statements inside
+	//for (print x; x < 100; x++) {
+	//	x = x^x;
+	//	print x;
+	//}
+//
+	////function calls
+	//root(x, s);
+	//square();
+//
+	////array element
+	//print b[3];
+//
+	////return is a statement
+	//return 0;
+}

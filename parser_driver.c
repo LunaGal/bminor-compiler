@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include "ast.h"
+
 extern int yyparse();
 extern FILE *yyin;
+extern decl_t *parser_result;
 
 int main(int argc, char const *argv[]) {
 	if (!argv[1]) {
@@ -14,6 +17,7 @@ int main(int argc, char const *argv[]) {
 	}
 
 	if(yyparse()==0) {
+		print_decl(parser_result, 0);
 		printf("Parse successful!\n");
 	}
 	else {

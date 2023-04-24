@@ -1,3 +1,4 @@
+#include "ast.h"
 #include "parser.tab.h"
 #include <stdio.h>
 
@@ -7,8 +8,11 @@ extern int line;
 extern char *yytext;
 const char* str_token_type(enum yytokentype);
 
+YYSTYPE yylval;
+
 int main(int argc, char const *argv[])
 {
+	printf("test %s\n", str_token_type(TOKEN_INT_LTRL));
 	if (!argv[1]) {
 		yyin = stdin;
 	}
@@ -32,7 +36,6 @@ int main(int argc, char const *argv[])
 
 const char* str_token_type(enum yytokentype t) {
 	switch (t) {
-		case TOKEN_EOF: return "EOF";
 		case TOKEN_ARRAY: return "keyword array";
 		case TOKEN_BOOLEAN: return "keyword boolean";
 		case TOKEN_CHAR: return "keyword char";
@@ -59,6 +62,9 @@ const char* str_token_type(enum yytokentype t) {
 		case TOKEN_R_BRACE: return "R brace";
 		case TOKEN_ASSIGN: return "assign";
 		case TOKEN_EQUIV: return "equiv";
+		case TOKEN_CHAR_LTRL: return "char literal";
+		case TOKEN_L_BRACKET: return "left bracket";
+		case TOKEN_R_BRACKET: return "right bracket";
 	}
 	return "";
 }
